@@ -92,7 +92,7 @@ namespace NinetiesTV
         // 8. Return the top three highest rated shows.
         static List<Show> TopThreeByRating(List<Show> shows)
         {
-            return shows.Take(3).ToList();
+            return shows.OrderByDescending(s => s.ImdbRating).Take(3).ToList();
         }
 
         // 9. Return the shows whose name starts with the word "The".
@@ -104,7 +104,7 @@ namespace NinetiesTV
         // 10. Return all shows except for the lowest rated show.
         static List<Show> AllButWorst(List<Show> shows)
         {
-            return shows.Skip(1).OrderBy(s => s.ImdbRating).ToList();
+            return shows.OrderBy(s => s.ImdbRating).Skip(1).ToList();
         }
 
         // 11. Return the names of the shows that had fewer than 100 episodes.
@@ -169,7 +169,7 @@ namespace NinetiesTV
         //     with an IMDB rating of less than 8.0 ordered alphabetically.
         static Show FirstLongRunningTopRated(List<Show> shows)
         {
-            return shows.FirstOrDefault(s => (s.EndYear - s.StartYear) > 10 && s.ImdbRating < 8.0);
+            return shows.Where(s => (s.EndYear - s.StartYear) > 10 && s.ImdbRating < 8.0).OrderBy(s => s.Name).FirstOrDefault();
         }
 
         // 21. Return the show with the most words in the name.
